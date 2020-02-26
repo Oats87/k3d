@@ -110,7 +110,7 @@ func writeRegistriesConfigInContainer(spec *ClusterSpec, ID string) error {
 
 // createRegistry creates a registry, or connect the k3d network to an existing one
 func createRegistry(spec ClusterSpec) (string, error) {
-	netName := k3dNetworkName(spec.ClusterName)
+	netName := k3dNetworkName(spec.ClusterName, spec.Network)
 
 	// first, check we have not already started a registry (for example, for a different k3d cluster)
 	// all the k3d clusters should share the same private registry, so if we already have a registry just connect
@@ -226,7 +226,7 @@ func connectRegistryToNetwork(ID string, networkID string, aliases []string) err
 // if the Registry container is not connected to any more networks, it is stopped
 func disconnectRegistryFromNetwork(name string) error {
 	// disconnect the registry from this cluster's network
-	netName := k3dNetworkName(name)
+	netName := k3dNetworkName(name, "")
 	cid, err := getRegistryContainer()
 	if err != nil {
 		return err

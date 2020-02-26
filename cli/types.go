@@ -50,6 +50,7 @@ type ClusterSpec struct {
 	RegistryPort       int
 	ServerArgs         []string
 	Volumes            *Volumes
+	Network            string
 }
 
 // PublishedPorts is a struct used for exposing container ports on the host system

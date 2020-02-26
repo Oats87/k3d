@@ -132,7 +132,7 @@ func createServer(spec *ClusterSpec) (string, error) {
 
 	networkingConfig := &network.NetworkingConfig{
 		EndpointsConfig: map[string]*network.EndpointSettings{
-			k3dNetworkName(spec.ClusterName): {
+			k3dNetworkName(spec.ClusterName, spec.Network): {
 				Aliases: []string{containerName},
 			},
 		},
@@ -229,7 +229,7 @@ func createWorker(spec *ClusterSpec, postfix int) (string, error) {
 
 	networkingConfig := &network.NetworkingConfig{
 		EndpointsConfig: map[string]*network.EndpointSettings{
-			k3dNetworkName(spec.ClusterName): {
+			k3dNetworkName(spec.ClusterName, spec.Network): {
 				Aliases: []string{containerName},
 			},
 		},

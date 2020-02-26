@@ -576,6 +576,7 @@ func AddNode(c *cli.Context) error {
 	 */
 
 	clusterName := c.String("name")
+	network := c.String("network")
 	nodeCount := c.Int("count")
 
 	clusterSpec := &ClusterSpec{
@@ -590,6 +591,7 @@ func AddNode(c *cli.Context) error {
 		PortAutoOffset:     0,
 		ServerArgs:         nil,
 		Volumes:            &Volumes{},
+		Network:            network,
 	}
 
 	/* (0.1)
@@ -654,8 +656,10 @@ func AddNode(c *cli.Context) error {
 
 	if c.IsSet("k3s") {
 		log.Infof("Adding %d %s-nodes to k3s cluster %s...\n", nodeCount, nodeRole, c.String("k3s"))
-		if _, err := createClusterNetwork(clusterName); err != nil {
-			return err
+		if len(network) == 0 {
+			if _, err := createClusterNetwork(clusterName); err != nil {
+				return err
+			}
 		}
 		if err := addNodeToK3s(c, clusterSpec, nodeRole); err != nil {
 			return err

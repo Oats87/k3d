@@ -160,6 +160,11 @@ func main() {
 					Usage: "Name of the k3d cluster that you want to add a node to [only for node name if --k3s is set]",
 					Value: defaultK3sClusterName,
 				},
+				cli.StringFlag{
+					Name:  "network",
+					Usage: "Specify the docker network to attach the node to",
+					Value: "",
+				},
 				cli.IntFlag{
 					Name:  "count, c",
 					Usage: "Number of nodes that you want to add",
